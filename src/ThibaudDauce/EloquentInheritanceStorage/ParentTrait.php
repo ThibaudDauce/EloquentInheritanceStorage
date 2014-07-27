@@ -28,17 +28,19 @@ trait ParentTrait {
     $this->setInheritanceStorageMode($previousMode);
   }
 
+
   /**
-   * Perform the actual delete query on this model instance.
+   * Delete the model from the database.
    *
    * @override Illuminate\Database\Eloquent\Model
-   * @return void
+   * @return bool|null
+   * @throws \Exception
    */
-  protected function performDeleteOnModel()
+  public function delete()
   {
     $previousMode = $this->setInheritanceStorageMode(InheritanceStorage::STORAGE_MODE);
 
-    parent::performDeleteOnModel();
+    parent::delete();
 
     $this->setInheritanceStorageMode($previousMode);
   }
