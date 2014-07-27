@@ -40,7 +40,7 @@ class Character extends Eloquent {
 
   use ParentTrait;
 
-  $table = 'characters_storage';
+  $table = 'characters';
   $primaryKey = 'name';
 }
 ```
@@ -144,3 +144,28 @@ CREATE VIEW `characters` AS
 `Character::create(array('name' => 'Thibaud'))` will add a line in `character_storage` table.
 
 `Warrior::create(array('name' => 'Thibaud', 'rage' => 10))` will add a line in `warriors` table.
+
+## Extending the package
+
+### Storage name
+
+You can use a different storage table name by overriding `$storageSuffix` and `$storageSeparator` in your parent model.
+
+For a table named `characters-table`
+```php
+<?php
+
+use ThibaudDauce\EloquentInheritanceStorage\ParentTrait;
+
+class Character extends Eloquent {
+
+  use ParentTrait;
+
+  $table = 'characters';
+  $storageSuffix = 'table';
+  $storageSeparator = '-';
+  $primaryKey = 'name';
+}
+```
+
+TODO: add a variable `$storageTable`.
