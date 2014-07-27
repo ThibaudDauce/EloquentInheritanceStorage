@@ -59,6 +59,26 @@ trait ParentTrait {
   }
 
   /**
+   * Create a new model instance that is existing.
+   *
+   * @override Illuminate\Database\Eloquent\Model
+   * @param  array  $attributes
+   * @return \Illuminate\Database\Eloquent\Model|static
+   */
+  public function newFromBuilder($attributes = array())
+  {
+    if (!isset($attributes->class_name))
+      return parent::newFromBuilder($attributes);
+
+    $class = $attributes->class_name;
+    $instance = new $class;
+
+    $instance->setRawAttributes((array) $attributes, true);
+
+    return $instance;
+  }
+
+  /**
    * Get the storage table associated with the model.
    *
    * @return string
