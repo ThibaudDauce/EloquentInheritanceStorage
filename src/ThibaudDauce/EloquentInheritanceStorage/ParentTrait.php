@@ -21,7 +21,7 @@ trait ParentTrait {
    */
   public function save(array $options = array())
   {
-    $previousMode = $this->setMode(Inheritance::SET_MODE);
+    $previousMode = $this->setMode(InheritanceStorage::STORAGE_MODE);
 
     parent::save($options);
 
@@ -36,7 +36,7 @@ trait ParentTrait {
    */
   public function getTable()
   {
-    if ($this->getMode() == Inheritance::GET_MODE)
+    if ($this->getMode() == InheritanceStorage::VIEW_MODE)
       return parent::getTable();
     else
       return $this->getStorage();
