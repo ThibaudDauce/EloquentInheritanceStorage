@@ -6,11 +6,11 @@ use ThibaudDauce\EloquentInheritanceStorage\InheritanceStorage as InheritanceSto
 trait ParentTrait {
 
   // Default value : get models from view
-  private $inheritanceStorageMode = InheritanceStorage::VIEW_MODE;
+  protected $inheritanceStorageMode = InheritanceStorage::VIEW_MODE;
 
   // Default view name : "models_storage"
-  private $storageSuffix = 'storage';
-  private $storageSeparator = '_';
+  protected $storageSuffix = 'storage';
+  protected $storageSeparator = '_';
 
   /**
    * Save the model to the database.
