@@ -1,4 +1,4 @@
-<?php namespace ThibaudDauce\EloquentInheritance\Facades;
+<?php namespace ThibaudDauce\EloquentInheritanceStorage\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

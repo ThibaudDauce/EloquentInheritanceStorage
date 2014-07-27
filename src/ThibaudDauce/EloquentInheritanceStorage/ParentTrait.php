@@ -1,4 +1,4 @@
-<?php namespace ThibaudDauce\EloquentInheritance;
+<?php namespace ThibaudDauce\EloquentInheritanceStorage;
 
 trait ParentTrait {
 
