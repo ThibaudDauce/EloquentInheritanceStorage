@@ -1,0 +1,20 @@
+{
+    "name": "thibaud-dauce/eloquent-inheritance-storage",
+    "description": "",
+    "authors": [
+        {
+            "name": "Thibaud Dauce",
+            "email": "thibaud@dauce.fr"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "ThibaudDauce\\EloquentInheritanceStorage": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
