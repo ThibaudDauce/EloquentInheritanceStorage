@@ -1,6 +1,7 @@
 {
     "name": "thibaud-dauce/eloquent-inheritance-storage",
-    "description": "",
+    "description": "Easily manage inheritance with Eloquent ORM",
+    "license": "GPL-3.0+",
     "authors": [
         {
             "name": "Thibaud Dauce",
@@ -9,6 +10,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
+        "laravel/framework": "4.2.*",
         "illuminate/support": "4.2.*"
     },
     "autoload": {
