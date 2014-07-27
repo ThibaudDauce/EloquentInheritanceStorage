@@ -141,7 +141,7 @@ CREATE VIEW `characters` AS
 
 ### Save model
 
-`Character::create(array('name' => 'Thibaud'))` will add a line in `character_storage` table.
+`Character::create(array('name' => 'Thibaud'))` will add a line in `characters_storage` table.
 
 `Warrior::create(array('name' => 'Thibaud', 'rage' => 10))` will add a line in `warriors` table.
 
