@@ -1,6 +1,7 @@
 <?php namespace ThibaudDauce\EloquentInheritanceStorage;
 
 use Illuminate\Support\ServiceProvider;
+use ThibaudDauce\EloquentInheritanceStorage\InheritanceStorage;
 
 class EloquentInheritanceStorageServiceProvider extends ServiceProvider {
 
@@ -28,8 +29,9 @@ class EloquentInheritanceStorageServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app['eloquent-inheritance-storage'] = $this->app->share(function($app) {
-			return new InheritanceStorage;
+		\App::bind('eloquent-inheritance-storage', function()
+		{
+		    return new InheritanceStorage;
 		});
 	}
 
