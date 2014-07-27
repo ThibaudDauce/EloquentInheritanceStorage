@@ -28,7 +28,6 @@ trait ParentTrait {
     $this->setInheritanceStorageMode($previousMode);
   }
 
-
   /**
    * Delete the model from the database.
    *
@@ -53,7 +52,7 @@ trait ParentTrait {
    */
   public function getTable()
   {
-    if ($this->getInheritanceStorageMode() == InheritanceStorage::VIEW_MODE)
+    if ($this->isInheritancechild() OR $this->getInheritanceStorageMode() == InheritanceStorage::VIEW_MODE)
       return parent::getTable();
     else
       return $this->getInheritanceStorage();
@@ -91,5 +90,15 @@ trait ParentTrait {
     $this->inheritanceStorageMode = $mode;
 
     return $previousMode;
+  }
+
+  /**
+   * Check if the model is a parent or a child.
+   *
+   * @return boolean
+   */
+  public function isInheritanceChild() {
+
+    return get_class() !== get_class($this);
   }
 }
