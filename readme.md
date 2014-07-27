@@ -39,6 +39,9 @@ use ThibaudDauce\EloquentInheritanceStorage\ParentTrait;
 class Character extends Eloquent {
 
   use ParentTrait;
+
+  $table = 'characters_storage';
+  $primaryKey = 'name';
 }
 ```
 
@@ -49,10 +52,12 @@ Don't do anything to the `Warrior` and `Wizard` models.
 
 class Warrior extends Character {
 
+  $table = 'warriors';
 }
 
 class Wizard extends Character {
 
+  $table = 'wizards';
 }
 ```
 
@@ -121,3 +126,21 @@ CREATE VIEW `characters` AS
 ```
 
 ## Usage
+
+### Get model
+
+`Character::all()` will return a collection with `Character`, `Warrior` and `Wizard` models.
+
+`Character::find($characterName)` will return a `Character`.
+
+`Character::find($warriorName)` will return a `Warrior`.
+
+`Warrior::find($warriorName)` will return a `Warrior`.
+
+`Warrior::find($characterName)` or `Warrior::find($wizardName)` will throw an error.
+
+### Save model
+
+`Character::create(array('name' => 'Thibaud'))` will add a line in `character_storage` table.
+
+`Warrior::create(array('name' => 'Thibaud', 'rage' => 10))` will add a line in `warriors` table.
