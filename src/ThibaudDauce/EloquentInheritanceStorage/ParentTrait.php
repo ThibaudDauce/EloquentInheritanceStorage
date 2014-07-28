@@ -1,6 +1,5 @@
 <?php namespace ThibaudDauce\EloquentInheritanceStorage;
 
-use ThibaudDauce\EloquentInheritanceStorage\Facades\InheritanceStorage as InheritanceStorageFacade;
 use ThibaudDauce\EloquentInheritanceStorage\InheritanceStorage as InheritanceStorage;
 
 trait ParentTrait {
