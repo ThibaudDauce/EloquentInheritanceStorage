@@ -1,6 +1,6 @@
 Eloquent Inheritance Storage
 ===============
-
+[![Build Status](https://travis-ci.org/ThibaudDauce/EloquentInheritanceStorage.svg)](https://travis-ci.org/ThibaudDauce/EloquentInheritanceStorage)
 
 ## Introduction
 
