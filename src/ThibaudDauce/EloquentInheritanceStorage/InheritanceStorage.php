@@ -21,4 +21,12 @@ class InheritanceStorage {
   public function STORAGE_MODE() {
     return self::STORAGE_MODE;
   }
+
+  public function activate() {
+    self::$activated = true;
+  }
+
+  public function desactivate() {
+    self::$activated = false;
+  }
 }
