@@ -15,10 +15,10 @@ class InheritanceStorage {
    * Getters for const values 
   **/
   public function VIEW_MODE() {
-    return static::VIEW_MODE;
+    return self::VIEW_MODE;
   }
 
   public function STORAGE_MODE() {
-    return static::STORAGE_MODE;
+    return self::STORAGE_MODE;
   }
 }
