@@ -51,7 +51,7 @@ trait ParentTrait {
    */
   public function getTable()
   {
-    if ($this->isInheritancechild() OR $this->getInheritanceStorageMode() == InheritanceStorage::VIEW_MODE)
+    if ($this->isInheritancechild() OR (InheritanceStorage::$activated AND $this->getInheritanceStorageMode() == InheritanceStorage::VIEW_MODE))
       return parent::getTable();
     else
       return $this->getInheritanceStorage();
@@ -102,14 +102,14 @@ trait ParentTrait {
 
   /**
    * Set the mode of the model.
-   * @throws \InvalidArgumentException 
+   * @throws \InvalidArgumentException
    * @return $previousMode (InheritanceStorage::VIEW_MODE or InheritanceStorage::STORAGE_MODE)
    */
   public function setInheritanceStorageMode($mode) {
 
     if (!in_array($mode, [InheritanceStorage::VIEW_MODE, InheritanceStorage::STORAGE_MODE]))
       throw new \InvalidArgumentException("Can't set InheritanceStorageMode to ".$mode." because it is not a valid mode.");
-    
+
     $previousMode = $this->getInheritanceStorageMode();
 
     $this->inheritanceStorageMode = $mode;
