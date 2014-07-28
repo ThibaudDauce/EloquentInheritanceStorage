@@ -43,8 +43,8 @@ class Character extends Eloquent {
 
   use ParentTrait;
 
-  $table = 'characters';
-  $primaryKey = 'name';
+  protected $table = 'characters';
+  protected $primaryKey = 'name';
 }
 ```
 
@@ -55,12 +55,12 @@ Don't do anything to the `Warrior` and `Wizard` models (the child classes).
 
 class Warrior extends Character {
 
-  $table = 'warriors';
+  protected $table = 'warriors';
 }
 
 class Wizard extends Character {
 
-  $table = 'wizards';
+  protected $table = 'wizards';
 }
 ```
 
@@ -167,8 +167,8 @@ class Character extends Eloquent {
 
   use ParentTrait;
 
-  $table = 'characters';
-  $inheritanceStorageName = 'characters-table';
-  $primaryKey = 'name';
+  protected $table = 'characters';
+  protected $inheritanceStorageName = 'characters-table';
+  protected $primaryKey = 'name';
 }
 ```
