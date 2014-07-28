@@ -56,6 +56,46 @@ class ParentTraitTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals('custom-storage-name', $this->characterCustomStorage->getInheritanceStorage());
   }
 
+  public function testNewFromBuilder()
+  {
+    // Test with the parent class without a class_name
+    $character = new Character;
+    $characterAttributes = ['name' => 'Antoine'];
+    $character = $character->newFromBuilder($characterAttributes);
+
+    $this->assertTrue($character instanceof Character);
+    $this->assertFalse($character instanceof Warrior);
+    $this->assertFalse($character instanceof Wizard);
+    $this->assertEquals($characterAttributes['name'], $character->getAttribute('name'));
+
+    // Test with a child class
+    $warrior = new Warrior;
+    $warriorAttributes = ['class_name' => 'Warrior', 'name' => 'Antoine', 'rage' => 42];
+    $warrior = $warrior->newFromBuilder($warriorAttributes);
+
+    $this->assertTrue($warrior instanceof Warrior);
+    $this->assertEquals($warriorAttributes['name'], $warrior->getAttribute('name'));
+    $this->assertEquals($warriorAttributes['rage'], $warrior->getAttribute('rage'));
+  }
+
+  public function testInheritanceStorageMode()
+  {
+    $previousMode = $this->character->getInheritanceStorageMode();
+    $result = $this->character->setInheritanceStorageMode(InheritanceStorage::VIEW_MODE);
+
+    // Should return the previous value after setting
+    $this->assertEquals($previousMode, $result);
+    // Should have set the new value
+    $this->assertEquals(InheritanceStorage::VIEW_MODE, $this->character->getInheritanceStorageMode());
+  }
+
+  /**
+   * @expectedException \InvalidArgumentException
+  */
+  public function testWrongSetInheritanceStorageMode()
+  {
+    $this->character->setInheritanceStorageMode('bar');
+  }
 }
 
 // The parent class
