@@ -149,9 +149,9 @@ CREATE VIEW `characters` AS
 
 ### Storage name
 
-You can use a different storage table name by overriding `$storageSuffix` and `$storageSeparator` in your parent model.
+You can use a different storage table name by defining `$inheritanceStorageName` in your parent model.
 
-For a table named `characters-table`
+Example: for a view named `characters` and a storage table named `characters-table`
 ```php
 <?php
 
@@ -162,10 +162,7 @@ class Character extends Eloquent {
   use ParentTrait;
 
   $table = 'characters';
-  $storageSuffix = 'table';
-  $storageSeparator = '-';
+  $inheritanceStorageName = 'characters-table';
   $primaryKey = 'name';
 }
 ```
-
-TODO: add a variable `$storageTable`.

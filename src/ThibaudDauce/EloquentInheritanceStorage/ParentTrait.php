@@ -84,7 +84,10 @@ trait ParentTrait {
    */
   public function getInheritanceStorage() {
 
-    return parent::getTable() . $this->storageSeparator . $this->storageSuffix;
+    if (isset($this->inheritanceStorageName))
+      return $this->inheritanceStorageName;
+    else
+      return parent::getTable() . $this->storageSeparator . $this->storageSuffix;
   }
 
   /**
