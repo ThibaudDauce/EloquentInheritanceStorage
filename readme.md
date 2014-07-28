@@ -167,8 +167,8 @@ class Character extends Eloquent {
 
   use ParentTrait;
 
-  $table = 'characters';
-  $inheritanceStorageName = 'characters-table';
-  $primaryKey = 'name';
+  protected $table = 'characters';
+  protected $inheritanceStorageName = 'characters-table';
+  protected $primaryKey = 'name';
 }
 ```
