@@ -6,6 +6,10 @@
         {
             "name": "Thibaud Dauce",
             "email": "thibaud@dauce.fr"
+        },
+        {
+            "name": "Antoine Augusti",
+            "email": "antoine@augusti.fr"
         }
     ],
     "require": {
