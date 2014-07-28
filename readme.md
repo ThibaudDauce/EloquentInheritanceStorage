@@ -4,8 +4,12 @@ Eloquent Inheritance Storage
 
 ## Introduction
 
+Eloquent Inheritance Storage is extending Eloquent ORM in order to provide support for models extending other models. It allows you to store and retrieve parent and child models easily.
+
+This package is an extension of `single table inheritance` pattern. It uses views instead of tables to store data, and, this way, avoids tables with many NULL values.
+
 ## Installation
-[PHP](https://php.net) 5.4+ and [Laravel](http://laravel.com) 4.2+ are required.
+[PHP](https://php.net) 5.5+ and [Laravel](http://laravel.com) 4.2+ are required.
 
 To get the latest version of Eloquent Inheritance Storage, simply require `"thibaud-dauce/eloquent-inheritance-storage": "0.*"` in your `composer.json` file. You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
 
@@ -21,18 +25,15 @@ You can register the `InheritanceStorage` facade in the `aliases` key of your `a
 
 ### Presentation
 
-Let's imagine that I'm currently developing a video game with different kind of characters. I will have some basic characters and some specialized ones:
-  * A `warrior` will be a character with a `rage` attribute.
-  * A `wizard` will be a character with a `magic` attribute.
+I'm currently developing a video game with characters. I also need warriors with rage and wizards with magic.
 
-My class hierarchy will be the following:
 * `Character`: id, name.
   * `Warrior` extends `Character`: id, name, rage.
   * `Wizard` extends `Character`: id, name, magic.
 
 ### Models
 
-Apply the `ThibaudDauce\EloquentInheritanceStorage\ParentTrait` to the `Character` model (the parent class).
+Apply the `ThibaudDauce\EloquentInheritanceStorage\ParentTrait` to the `Character` model.
 
 ```php
 <?php
@@ -43,47 +44,33 @@ class Character extends Eloquent {
 
   use ParentTrait;
 
-  protected $table = 'characters';
-  protected $primaryKey = 'name';
+  $table = 'characters';
+  $primaryKey = 'name';
 }
 ```
 
-Don't do anything to the `Warrior` and `Wizard` models (the child classes).
+Don't do anything to the `Warrior` and `Wizard` models.
 
 ```php
 <?php
 
 class Warrior extends Character {
 
-  protected $table = 'warriors';
+  $table = 'warriors';
 }
 
 class Wizard extends Character {
 
-  protected $table = 'wizards';
+  $table = 'wizards';
 }
 ```
 
 ### Database
 
-We are going to create 3 tables and a view:
-  * a table named `characters_storage` that will contain only basic characters (from the parent class).
-  * a table named `warriors` that will contain only warriors (from a child class).
-  * a table named `wizards` that will contain only wizards (from a child class).
-  * a view named `characters` that will contain characters, warriors and wizards.
-
-Let's create our tables. Pay attention to the different tables' name!
+Create regular tables for child models.
 ```php
 <?php
 
-// Table for our parent class
-Schema::create('characters_storage', function(Blueprint $table)
-{
-  $table->increments('id');
-  $table->string('name')->unique();
-});
-
-// Tables for our child classes
 Schema::create('warriors', function(Blueprint $table)
 {
   $table->increments('id');
@@ -99,15 +86,26 @@ Schema::create('wizards', function(Blueprint $table)
 });
 ```
 
-And finally, let's create the `characters` view that will contain our characters, warriors and wizards. Don't forget to the add a `class_name` field to your view.
+Name the `Character` table `characters_storage`.
 ```php
 <?php
 
-DB::statement("
+Schema::create('characters_storage', function(Blueprint $table)
+{
+  $table->increments('id');
+  $table->string('name')->unique();
+});
+```
+
+And finally, create the `characters` view: union of all the tables. Don't forget to add `class_name` field.
+```php
+<?php
+
+DB::statement('
 CREATE VIEW `characters` AS
   SELECT
     `characters_storage`.`id` AS `id` ,
-    'Character' AS `class_name` ,
+    \'Character\' AS `class_name` ,
     `characters_storage`.`name` AS `name` ,
     NULL AS `rage` ,
     NULL AS `magic` ,
@@ -115,7 +113,7 @@ CREATE VIEW `characters` AS
   UNION
   SELECT
     `warriors`.`id` AS `id` ,
-    'Warrior' AS `class_name` ,
+    \'Warrior\' AS `class_name` ,
     `warriors`.`name` AS `name` ,
     `warriors`.`rage` AS `rage` ,
     NULL AS `magic` ,
@@ -123,19 +121,19 @@ CREATE VIEW `characters` AS
   UNION
   SELECT
     `wizards`.`id` AS `id` ,
-    'Wizard' AS `class_name` ,
+    \'Wizard\' AS `class_name` ,
     `wizards`.`name` AS `name` ,
     `wizards`.`magic` AS `magic` ,
     NULL AS `rage` ,
   FROM `wizards` ;
-");
+');
 ```
 
 ## Usage
 
-### Get a model
+### Get model
 
-`Character::all()` will return a collection containing `Character`, `Warrior` and `Wizard` models.
+`Character::all()` will return a collection with `Character`, `Warrior` and `Wizard` models.
 
 `Character::find($characterName)` will return a `Character`.
 
@@ -145,11 +143,11 @@ CREATE VIEW `characters` AS
 
 `Warrior::find($characterName)` or `Warrior::find($wizardName)` will throw an error.
 
-### Save a model
+### Save model
 
-`Character::create(array('name' => 'Thibaud'))` will store a character in the `characters_storage` table.
+`Character::create(array('name' => 'Thibaud'))` will add a line in `characters_storage` table.
 
-`Warrior::create(array('name' => 'Thibaud', 'rage' => 10))` will add a line in the `warriors` table.
+`Warrior::create(array('name' => 'Thibaud', 'rage' => 10))` will add a line in `warriors` table.
 
 ## Extending the package
 
@@ -167,8 +165,8 @@ class Character extends Eloquent {
 
   use ParentTrait;
 
-  protected $table = 'characters';
-  protected $inheritanceStorageName = 'characters-table';
-  protected $primaryKey = 'name';
+  $table = 'characters';
+  $inheritanceStorageName = 'characters-table';
+  $primaryKey = 'name';
 }
 ```
