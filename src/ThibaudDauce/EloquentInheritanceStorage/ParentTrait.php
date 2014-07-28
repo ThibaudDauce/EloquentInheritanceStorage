@@ -93,7 +93,7 @@ trait ParentTrait {
   /**
    * Get the current mode associated with the model.
    *
-   * @return InheritanceStorage::VIEW_MODE() or InheritanceStorage::STORAGE_MODE()
+   * @return InheritanceStorage::VIEW_MODE or InheritanceStorage::STORAGE_MODE
    */
   public function getInheritanceStorageMode() {
 
@@ -102,11 +102,14 @@ trait ParentTrait {
 
   /**
    * Set the mode of the model.
-   *
-   * @return $previousMode (InheritanceStorage::VIEW_MODE() or InheritanceStorage::STORAGE_MODE())
+   * @throws \InvalidArgumentException 
+   * @return $previousMode (InheritanceStorage::VIEW_MODE or InheritanceStorage::STORAGE_MODE)
    */
   public function setInheritanceStorageMode($mode) {
 
+    if (!in_array($mode, [InheritanceStorage::VIEW_MODE, InheritanceStorage::STORAGE_MODE]))
+      throw new \InvalidArgumentException("Can't set InheritanceStorageMode to ".$mode." because it is not a valid mode.");
+    
     $previousMode = $this->getInheritanceStorageMode();
 
     $this->inheritanceStorageMode = $mode;
