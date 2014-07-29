@@ -1,40 +1,18 @@
 <?php
-use ThibaudDauce\EloquentInheritanceStorage\ParentTrait;
-use Illuminate\Database\Eloquent\Model as Eloquent;
-use Illuminate\Foundation\Testing\TestCase;
 use ThibaudDauce\EloquentInheritanceStorage\InheritanceStorage;
-use ThibaudDauce\EloquentInheritanceStorage\Facades\InheritanceStorage as FacadeInheritanceStorage;
 
-class InheritanceStorageTest extends TestCase {
+class InheritanceStorageTest extends PHPUnit_Framework_TestCase {
 
-  public $warrior;
-  public $wizard;
   public $character;
-  public $characterCustomStorage;
-
-  /**
-   * Creates the application.
-   *
-   * @return \Symfony\Component\HttpKernel\HttpKernelInterface
-   */
-  public function createApplication()
-  {
-    $unitTesting = true;
-
-    $testEnvironment = 'testing';
-
-    return require __DIR__.'/../../../../../bootstrap/start.php';
-  }
+  public $inheritanceStorage;
 
   public function setUp()
   {
     parent::setUp();
 
     // Build some objects for our tests
-    $this->character              = new Character;
-    $this->warrior                = new Warrior;
-    $this->wizard                 = new Wizard;
-    $this->characterCustomStorage = new CharacterCustomStorage;
+    $this->character          = new Character;
+    $this->inheritanceStorage = new InheritanceStorage;
   }
 
   public function tearDown()
@@ -45,15 +23,15 @@ class InheritanceStorageTest extends TestCase {
   public function testInheritanceStorageActivation()
   {
     $this->assertTrue(InheritanceStorage::$activated);
-    FacadeInheritanceStorage::desactivate();
+    $this->inheritanceStorage->desactivate();
     $this->assertFalse(InheritanceStorage::$activated);
-    FacadeInheritanceStorage::activate();
+    $this->inheritanceStorage->activate();
     $this->assertTrue(InheritanceStorage::$activated);
   }
 
   public function testActionOnStorage()
   {
-    $storageTable = FacadeInheritanceStorage::actionOnStorage(function() {
+    $storageTable = $this->inheritanceStorage->actionOnStorage(function() {
       $character = new Character;
       return $character->getTable();
     });
