@@ -1,5 +1,7 @@
 <?php namespace ThibaudDauce\EloquentInheritanceStorage;
 
+use Closure;
+
 class InheritanceStorage {
 
   /* Service status :
@@ -28,5 +30,16 @@ class InheritanceStorage {
 
   public function desactivate() {
     self::$activated = false;
+  }
+
+  public function actionOnStorage(Closure $action) {
+
+    self::desactivate();
+
+    $data = $action();
+
+    self::activate();
+
+    return $data;
   }
 }

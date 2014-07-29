@@ -50,4 +50,17 @@ class InheritanceStorageTest extends TestCase {
     FacadeInheritanceStorage::activate();
     $this->assertTrue(InheritanceStorage::$activated);
   }
+
+  public function testActionOnStorage()
+  {
+    $storageTable = FacadeInheritanceStorage::actionOnStorage(function() {
+      $character = new Character;
+      return $character->getTable();
+    });
+    $this->assertEquals('characters_storage', $storageTable);
+
+    $character = new Character;
+    $notStorageTable = $character->getTable();
+    $this->assertNotEquals('characters_storage', $notStorageTable);
+  }
 }
