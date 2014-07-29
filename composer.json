@@ -2,6 +2,7 @@
     "name": "thibaud-dauce/eloquent-inheritance-storage",
     "description": "Easily manage inheritance with Eloquent ORM",
     "license": "MIT",
+    "keywords": ["laravel", "eloquent", "model", "inheritance", "table", "view"],
     "authors": [
         {
             "name": "Thibaud Dauce",
